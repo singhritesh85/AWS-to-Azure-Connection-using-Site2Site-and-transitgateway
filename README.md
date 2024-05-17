@@ -211,6 +211,8 @@ Target gateway type: Transit Gateway (Select the Transit gateway created earlier
 Customer gateway: Existing (Select Customer gateway created earlier)
 Routing options: Static
 Leave rest of the configuration as default
+
+After Creation of AWS VPN Connection (site-to-site), check a Transit Gateway Attachment for VPN will be created automatically.
 ```
 10. Download the configuration file from AWS Console of Site-to-Site VPN
 ```
