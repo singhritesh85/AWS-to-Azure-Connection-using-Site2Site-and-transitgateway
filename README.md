@@ -116,7 +116,7 @@ IPv4 CIDR: 10.10.6.0/24
 
 
 Internet Gateway Name: IGW-1
-Attach Internet Gateway to VPC
+Attach Internet Gateway to VPC-1
 
 
 create a private route table and public route table named as PrivateRT-1 and PublicRT-1.
@@ -124,8 +124,59 @@ Associate three public subnets to Public Route table and three private subnets t
 Destination: 0.0.0.0/0
 Target: Internet Gateway that was created earlier
 
+Create an EC2 Instance in Public Subnet.
+
+
+
+
+
+Name: PrivateSubnet-21
+VPC Name: VPC-2
+VPC IPv4 CIDR: 10.20.0.0/16
+IPv4 CIDR: 10.20.1.0/24
+
+
+Name: PrivateSubnet-22
+VPC Name: VPC-2
+VPC IPv4 CIDR: 10.20.0.0/16
+IPv4 CIDR: 10.20.2.0/24
+
+
+Name: PrivateSubnet-23
+VPC Name: VPC-2
+VPC IPv4 CIDR: 10.20.0.0/16
+IPv4 CIDR: 10.20.3.0/24
+
+
+Name: PublicSubnet-24
+VPC Name: VPC-2
+VPC IPv4 CIDR: 10.20.0.0/16
+IPv4 CIDR: 10.20.4.0/24
+
+
+Name: PublicSubnet-25
+VPC Name: VPC-2
+VPC IPv4 CIDR: 10.20.0.0/16
+IPv4 CIDR: 10.20.5.0/24
+
+
+Name: PublicSubnet-26
+VPC Name: VPC-2
+VPC IPv4 CIDR: 10.20.0.0/16
+IPv4 CIDR: 10.20.6.0/24
+
+
+Internet Gateway Name: IGW-2
+Attach Internet Gateway to VPC-2
+
+
+create a private route table and public route table named as PrivateRT-2 and PublicRT-2.
+Associate three public subnets to Public Route table and three private subnets to Private Route Table. Associate created Internet Gateway to Public Route Table with Destination: 0.0.0.0/0 and Target: Internet Gateway that was created earlier
+Destination: 0.0.0.0/0
+Target: Internet Gateway that was created earlier
 
 Create an EC2 Instance in Public Subnet.
+
 ```
 6. Create a customer gateway in AWS pointing to the Public IP Address of Azure VPN Gateway
 ```
