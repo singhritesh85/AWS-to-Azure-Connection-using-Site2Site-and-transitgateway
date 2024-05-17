@@ -10,33 +10,48 @@
 Resource Group Name: mederma-rg
 Region: East US
 ```
-2. Create VNet in Azure
+2. Create three VNets in Azure
 ```
 Resource Group Name: mederma-rg
 Region: East US
-VNet Name: mederma-vnet1
+VNet Name: VNet1
 VNet IPv4 Address Space(CIDR): 172.19.0.0/16
-Subnet Name: mederma-vnet1subnet
+Subnet Name: Subnet-1
 Subnet IPv4 Address Space(CIDR): 172.19.1.0/24
 GatewaySubnet with Address Space(CIDR): 172.19.2.0/24
 
+VNet Name: VNet2
+VNet IPv4 Address Space(CIDR): 172.20.0.0/16
+Subnet Name: Subnet-2
+Subnet IPv4 Address Space(CIDR): 172.20.1.0/24
 
-Create a Azure VM in this created subnet
+VNet Name: VNet3
+VNet IPv4 Address Space(CIDR): 172.21.0.0/16
+Subnet Name: Subnet-3
+Subnet IPv4 Address Space(CIDR): 172.21.1.0/24
+
+
+Create three Azure VMs in these three created subnets
 ```
-3. Create VPN Gateway
+3. Create a VPN Gateway using VNet1
 ```
-VPN Gateway Name: mederma-VNGTW
+VPN Gateway Name: VNGTW
 Region: East US
 Gateway Type: VPN
 SKU: VpnGw2
 Generation: Generation 2
-Virtual Network: mederma-vnet1
-Public IP Address: mederma-VNGTW1-ip
+Virtual Network: VNet1
+Public IP Address: VNGTW1-ip-1
 Public IP Address Type: Standard
 Assignment: Static
 Enable active-active mode: Disabled
 Configure BGP: Disabled
 ```
+#### Establish VNet Peering between VNet1, VNet2 and VNet3
+```
+
+```
+
 #### Configuration in AWS
 4. Creation of Virtual Private Cloud (VPC) in VPC
 ```
