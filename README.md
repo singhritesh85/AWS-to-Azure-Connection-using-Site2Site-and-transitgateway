@@ -47,7 +47,7 @@ Assignment: Static
 Enable active-active mode: Disabled
 Configure BGP: Disabled
 ```
-#### Establish VNet Peering between VNet1, VNet2 and VNet3
+#### Establish VNet Peering between VNet1 and VNet2, VNet1 and VNet3
 ```
 Between VNet1 and VNet2
 This virtual network peering link name (for VNet1): peer-1
@@ -69,54 +69,57 @@ Enable 'VNet3' to use 'VNet1's' remote gateway or route server
 ```
 
 #### Configuration in AWS
-4. Creation of Virtual Private Cloud (VPC) in VPC
+4. Creation of two Virtual Private Cloud (VPC) in AWS
 ```
-Name: test-vpc-dev
+Name: VPC-1
 IPv4 CIDR: 10.10.0.0/16
+
+Name: VPC-2
+IPv4 CIDR: 10.20.0.0/16
 ```
-5. Creation of six subnets inside the VPC (Virtual Network), Route table, Internet-Gateway
+5. Creation of six subnets inside the VPC-1 (Virtual Network), Route table, Internet-Gateway and six subnets inside the VPC-2 (Virtual Network), Route table, Internet-Gateway
 ```
-Name: PrivateSubnet-dev-1
-VPC Name: test-vpc-dev
+Name: PrivateSubnet-11
+VPC Name: VPC-1
 VPC IPv4 CIDR: 10.10.0.0/16
 IPv4 CIDR: 10.10.1.0/24
 
 
-Name: PrivateSubnet-dev-2
-VPC Name: test-vpc-dev
+Name: PrivateSubnet-12
+VPC Name: VPC-1
 VPC IPv4 CIDR: 10.10.0.0/16
 IPv4 CIDR: 10.10.2.0/24
 
 
-Name: PublicSubnet-dev-3
-VPC Name: test-vpc-dev
+Name: PrivateSubnet-13
+VPC Name: VPC-1
 VPC IPv4 CIDR: 10.10.0.0/16
 IPv4 CIDR: 10.10.3.0/24
 
 
-Name: PublicSubnet-dev-1
-VPC Name: test-vpc-dev
+Name: PublicSubnet-14
+VPC Name: VPC-1
 VPC IPv4 CIDR: 10.10.0.0/16
 IPv4 CIDR: 10.10.4.0/24
 
 
-Name: PublicSubnet-dev-2
-VPC Name: test-vpc-dev
+Name: PublicSubnet-15
+VPC Name: VPC-1
 VPC IPv4 CIDR: 10.10.0.0/16
 IPv4 CIDR: 10.10.5.0/24
 
 
-Name: PublicSubnet-dev-3
-VPC Name: test-vpc-dev
+Name: PublicSubnet-16
+VPC Name: VPC-1
 VPC IPv4 CIDR: 10.10.0.0/16
 IPv4 CIDR: 10.10.6.0/24
 
 
-Internet Gateway Name: test-IGW
+Internet Gateway Name: IGW-1
 Attach Internet Gateway to VPC
 
 
-create a private route table and public route table named as private-route-table-dev and public-route-table-dev.
+create a private route table and public route table named as PrivateRT-1 and PublicRT-1.
 Associate three public subnets to Public Route table and three private subnets to Private Route Table. Associate created Internet Gateway to Public Route Table with Destination: 0.0.0.0/0 and Target: Internet Gateway that was created earlier
 Destination: 0.0.0.0/0
 Target: Internet Gateway that was created earlier
