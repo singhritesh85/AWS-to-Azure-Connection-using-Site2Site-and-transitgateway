@@ -31,7 +31,7 @@ Subnet Name: Subnet-3
 Subnet IPv4 Address Space(CIDR): 172.21.1.0/24
 
 
-Create three Azure VMs in these three created subnets
+Create three Azure VMs (named as VM1, VM2 and VM3) in these three created subnets
 ```
 3. Create a VPN Gateway using VNet1
 ```
@@ -49,7 +49,23 @@ Configure BGP: Disabled
 ```
 #### Establish VNet Peering between VNet1, VNet2 and VNet3
 ```
+Between VNet1 and VNet2
+This virtual network peering link name (for VNet1): peer-1
+Allow gateway or route server in 'VNet1' to forward traffic to 'VNet2'
 
+Remote virtual network Peering link name: peer-2
+Select the Virtual network as VNet2
+Enable 'VNet2' to use 'VNet1's' remote gateway or route server
+
+
+
+Between VNet1 and VNet3
+This virtual network peering link name (for VNet1): peer-3
+Allow gateway or route server in 'VNet1' to forward traffic to 'VNet3'
+
+Remote virtual network Peering link name: peer-4
+Select the Virtual network as VNet3
+Enable 'VNet3' to use 'VNet1's' remote gateway or route server
 ```
 
 #### Configuration in AWS
