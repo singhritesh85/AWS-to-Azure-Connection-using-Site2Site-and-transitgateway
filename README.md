@@ -124,7 +124,7 @@ Associate three public subnets to Public Route table and three private subnets t
 Destination: 0.0.0.0/0
 Target: Internet Gateway that was created earlier
 
-Create an EC2 Instance in Public Subnet.
+Create an EC2 Instance in Public Subnet, PublicSubnet-11.
 
 
 
@@ -175,25 +175,41 @@ Associate three public subnets to Public Route table and three private subnets t
 Destination: 0.0.0.0/0
 Target: Internet Gateway that was created earlier
 
-Create an EC2 Instance in Public Subnet.
+Create an EC2 Instance in Public Subnet, PublicSubnet-21.
 
 ```
+#### Create Transit Gateway and Transit Gateway Attachments 
+```
+Create transit gateway 
+Transit Gateway Name: TG-01
+
+Transit gateway attachment
+Name: TG-Attachment-01
+Transit Gateway ID: Transit Gateway create earlier
+Attachment Type: VPC
+Select the VPC ID for VPC-1
+
+Transit gateway attachment
+Name: TG-Attachment-02
+Transit Gateway ID: Transit Gateway create earlier
+Attachment Type: VPC
+Select the VPC ID for VPC-2
+
+Entry corresponding to these Transit Gateway Attachments will be created in Transit Gateway Route Table's Route. 
+```
+
 6. Create a customer gateway in AWS pointing to the Public IP Address of Azure VPN Gateway
 ```
 IP address: Public IP Address of the Azure VPN Gateway
 Rest other configuration as default
 ```
-7. Create Virtual Private Gateway then attach to the AWS Virtual Private Cloud (VPC)
-```
-Name: mederma-virtual-private-gtw
-```
+
 8. Create a site-to-site VPN Connection in AWS
 ```
 Name: mederma-site2site
-Target gateway type: Virtual private gateway (Select the Virtual private gateway created earlier)
+Target gateway type: Transit Gateway (Select the Transit gateway created earlier)
 Customer gateway: Existing (Select Customer gateway created earlier)
 Routing options: Static
-Static IP prefixes: 172.19.1.0/24  (Azure VNet Subnet created earlier)
 Leave rest of the configuration as default
 ```
 9. Download the configuration file from AWS Console of Site-to-Site VPN
@@ -210,14 +226,14 @@ Name: mederma-lngtw-1
 Resource Group Name: mederma-rg
 Region: East US
 IP address: Outside IP address from the configuration file downloaded from AWS site-to-site VPN console for Tunnel-1.
-Address Space(s): 10.10.0.0/16
+Address Space(s): 10.10.0.0/16 and 10.20.0.0/16
 
 
 Name: mederma-lngtw-2
 Resource Group Name: mederma-rg
 Region: East US
 IP address: Outside IP address from the configuration file downloaded from AWS site-to-site VPN console for Tunnel-2.
-Address Space(s): 10.10.0.0/16
+Address Space(s): 10.10.0.0/16 and 10.20.0.0/16
 ```
 11. Create two connections in Virtual Network Gateway in Azure for two tunnels
 ```
@@ -236,10 +252,41 @@ Shared Key: Get the Shared Key from the configuration file downloaded earlier fr
 Wait till the Connection Status changed to Connected.
 Now check in AWS Console wheather the 2nd tunnel of Virtual Private Gateway became UP or not.
 ```
-12. Now edit the route table associated with created Virtual Private Cloud (VPC)
+12. Now edit the route table associated with created Virtual Private Clouds (VPCs) and route of the Route Table associated with Transit Gateway
 ```
-Do the entry in route of the Route Table of VPC for Azure Subnet through the Virtual Private Gateway
-Destination: 172.19.1.0/24
-Target: Virtual Private Gateway that we created earlier.
+Do the entry in route of the Route Table of VPC-1 for Azure Subnet through the Virtual Private Gateway
+Destination: 172.19.0.0/24
+Target: Transit Gateway that we created earlier.
+Destination: 172.20.0.0/24
+Target: Transit Gateway that we created earlier.
+Destination: 172.21.0.0/24
+Target: Transit Gateway that we created earlier.
+Destination: 10.20.0.0/24
+Target: Transit Gateway that we created earlier.
+
+
+Do the entry in route of the Route Table of VPC-2 for Azure Subnet through the Virtual Private Gateway
+Destination: 172.19.0.0/24
+Target: Transit Gateway that we created earlier.
+Destination: 172.20.0.0/24
+Target: Transit Gateway that we created earlier.
+Destination: 172.21.0.0/24
+Target: Transit Gateway that we created earlier.
+Destination: 10.10.0.0/24
+Target: Transit Gateway that we created earlier.
+
+
+Do the entry in route of the Route Table associated with Transit Gateway
+CIDR: 172.19.0.0/24
+Attachment: Transit Gateway Attachment that was created automatically after creation of AWS VPN Site-to-Site Connection.
+Type: Active
+
+CIDR: 172.20.0.0/24
+Attachment: Transit Gateway Attachment that was created automatically after creation of AWS VPN Site-to-Site Connection.
+Type: Active
+
+CIDR: 172.21.0.0/24
+Attachment: Transit Gateway Attachment that was created automatically after creation of AWS VPN Site-to-Site Connection.
+Type: Active
 ```
-Finally ping the two Private IPs of Azure VM from EC2 and EC2 from from Azure VM. 
+Finally ping the Private IPs of Azure VM from EC2 and EC2 from Azure VM, Azure VM from Azure VM (in differnet VNet) and EC2 from EC2(in different VPC). 
